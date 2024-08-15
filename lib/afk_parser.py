@@ -35,6 +35,9 @@ class AFKParser:
         elif any(text in phrase for text in ("after", "from", "post")):
             start_datetime = datetime(*time_struct[:6])
             end_datetime = datetime.combine(start_datetime, time.max)
+        elif " on " in phrase and " by " not in phrase:
+            end_datetime = datetime.combine(datetime(*time_struct[:6]), time.max)
+            start_datetime = datetime.combine(end_datetime, time.min)
         else:
             start_datetime = datetime.now()
             end_datetime = self.correct_end_of_day_datetimes(phrase=phrase, dt=datetime(*time_struct[:6]))

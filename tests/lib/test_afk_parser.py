@@ -169,6 +169,14 @@ def afk_parser() -> AFKParser:
         ),
         #! calculate both start_time and end_time
         (
+            "afk on monday",
+            (
+                datetime.combine(datetime.now(), time.min)
+                + timedelta(days=7 - datetime.now().weekday()),  # ? should this be just datetime.now()
+                datetime.combine(datetime.now(), time.max) + timedelta(days=7 - datetime.now().weekday()),
+            ),
+        ),
+        (
             "afk from 4pm for 1 hr",
             (
                 datetime.now().replace(hour=16, minute=0, second=0, microsecond=0),
