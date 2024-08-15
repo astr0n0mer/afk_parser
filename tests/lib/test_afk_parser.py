@@ -24,7 +24,7 @@ def afk_parser() -> AFKParser:
 @pytest.mark.parametrize(
     "phrase, expected_datetimes",
     [
-        # start_time is now, calculate end_time
+        #! start_time is now, calculate end_time
         ("afk for 0 min", (datetime.now(), datetime.now() + timedelta(minutes=0))),
         ("afk for -30 min", (datetime.now(), datetime.now() + timedelta(minutes=-30))),
         ("afk for 30 min", (datetime.now(), datetime.now() + timedelta(minutes=30))),
@@ -124,10 +124,61 @@ def afk_parser() -> AFKParser:
                 + timedelta(days=7 - datetime.now().weekday()),
             ),
         ),
+        #! calculate start_time, end_time is EOD
+        (
+            "afk post 5pm",
+            (
+                datetime.now().replace(hour=17, minute=0, second=0, microsecond=0),
+                datetime.combine(datetime.now(), time.max),
+            ),
+        ),
+        (
+            "afk post 5:30pm",
+            (
+                datetime.now().replace(hour=17, minute=30, second=0, microsecond=0),
+                datetime.combine(datetime.now().replace(hour=17, minute=30, second=0, microsecond=0), time.max),
+            ),
+        ),
+        (
+            "afk from 5pm",
+            (
+                datetime.now().replace(hour=17, minute=0, second=0, microsecond=0),
+                datetime.combine(datetime.now().replace(hour=17, minute=0, second=0, microsecond=0), time.max),
+            ),
+        ),
+        (
+            "afk from 5:30pm",
+            (
+                datetime.now().replace(hour=17, minute=30, second=0, microsecond=0),
+                datetime.combine(datetime.now().replace(hour=17, minute=30, second=0, microsecond=0), time.max),
+            ),
+        ),
+        (
+            "afk after 5pm",
+            (
+                datetime.now().replace(hour=17, minute=0, second=0, microsecond=0),
+                datetime.combine(datetime.now().replace(hour=17, minute=0, second=0, microsecond=0), time.max),
+            ),
+        ),
+        (
+            "afk after 5:30pm",
+            (
+                datetime.now().replace(hour=17, minute=30, second=0, microsecond=0),
+                datetime.combine(datetime.now().replace(hour=17, minute=30, second=0, microsecond=0), time.max),
+            ),
+        ),
+        #! calculate both start_time and end_time
+        (
+            "afk from 4pm for 1 hr",
+            (
+                datetime.now().replace(hour=16, minute=0, second=0),
+                datetime.now().replace(hour=16, minute=0, second=0) + timedelta(hours=1, seconds=-1),
+            ),
+        ),
     ],
 )
-def test_extract_datetime(afk_parser: AFKParser, phrase: str, expected_datetimes: tuple[datetime, datetime]):
-    result = afk_parser.get_afk_start_and_end_time(phrase=phrase)
+def test_extract_datetime(afk_parser: AFKParser, phrase: str, expected_datetimes: tuple[datetime, datetime]) -> None:
+    result = afk_parser.parse_dates(phrase=phrase)
     assert result is not None, f"Couldn't parse phrase: {phrase}"
     start_datetime, end_datetime = result
     expected_start_datetime, expected_end_datetime = expected_datetimes

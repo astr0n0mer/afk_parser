@@ -7,12 +7,6 @@ from lib.afk_parser import extract_datetime
 def main():
     phrases: list[Tuple[str, datetime]] = [
         # calculate start_time, end_time is EOD
-        ("afk post 5pm", datetime.now().replace(hour=17, minute=0, second=0, microsecond=0)),
-        ("afk post 5:30pm", datetime.now().replace(hour=17, minute=30, second=0, microsecond=0)),
-        ("afk from 5pm", datetime.now().replace(hour=17, minute=0, second=0, microsecond=0)),
-        ("afk from 5:30pm", datetime.now().replace(hour=17, minute=30, second=0, microsecond=0)),
-        ("afk after 5pm", datetime.now().replace(hour=17, minute=0, second=0, microsecond=0)),
-        ("afk after 5:30pm", datetime.now().replace(hour=17, minute=30, second=0, microsecond=0)),
         (
             "afk after 5pm for 1 hr",
             datetime.now().replace(hour=17, minute=0, second=0, microsecond=0),

@@ -1,10 +1,12 @@
 .venv:
 	python -m venv .venv
 
+.PHONY: requirements.txt
 requirements.txt: .venv
 	source .venv/bin/activate && \
 	pip-compile --output-file requirements.txt requirements.in
 
+.PHONY: requirements-dev.txt
 requirements-dev.txt: .venv
 	source .venv/bin/activate && \
 	pip-compile --output-file requirements-dev.txt requirements-dev.in
