@@ -42,7 +42,9 @@ class AFKParser:
 
     def parse_dates(self, phrase: str) -> tuple[datetime, datetime] | None:
         cal = parsedatetime.Calendar()
-        has_two_parts = "from" in phrase and any(text in phrase for text in ("to", "till", "for"))
+        has_two_parts = any(text in phrase for text in ("after", "from")) and any(
+            text in phrase for text in ("to", "till", "for")
+        )
         end_datetime_type = (
             datetime if any(text in phrase for text in ("to", "till")) else timedelta if "for" in phrase else Any
         )

@@ -171,8 +171,15 @@ def afk_parser() -> AFKParser:
         (
             "afk from 4pm for 1 hr",
             (
-                datetime.now().replace(hour=16, minute=0, second=0),
-                datetime.now().replace(hour=16, minute=0, second=0) + timedelta(hours=1, seconds=-1),
+                datetime.now().replace(hour=16, minute=0, second=0, microsecond=0),
+                datetime.now().replace(hour=16, minute=0, second=0, microsecond=0) + timedelta(hours=1, seconds=-1),
+            ),
+        ),
+        (
+            "afk after 5pm for 2 hr",
+            (
+                datetime.now().replace(hour=17, minute=0, second=0, microsecond=0),
+                datetime.now().replace(hour=17, minute=0, second=0, microsecond=0) + timedelta(hours=2, seconds=-1),
             ),
         ),
     ],
