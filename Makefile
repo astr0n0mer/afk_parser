@@ -18,7 +18,7 @@ install: .venv
 	source .venv/bin/activate && \
 	pip install -r requirements.txt
 
-.PHONY: install-dev
+.PHONY: install_dev
 install_dev: install
 	source .venv/bin/activate && \
 	pip install -r requirements-dev.txt
