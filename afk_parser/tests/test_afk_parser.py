@@ -7,7 +7,7 @@ import pytest
 sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
 
-from lib.afk_parser import AFKParser
+from afk_parser.afk_parser import AFKParser
 from lib.extended_datetime import extended_datetime
 from lib.relativedelta import relativedelta
 

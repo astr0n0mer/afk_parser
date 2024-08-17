@@ -1,6 +1,6 @@
 import sys
 
-from lib.afk_parser import AFKParser
+from afk_parser.afk_parser import AFKParser
 
 
 def main():
