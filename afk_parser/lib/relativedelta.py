@@ -19,9 +19,15 @@ class relativedelta(timedelta):
             month_diff = self._months - other._months
             self._months += month_diff if month_diff >= 0 else 12 - abs(month_diff)
             self._years += other._years - (0 if month_diff >= 0 else 1)
-            return relativedelta(months=self._months, years=self._years, timedelta=self._timedelta)
+            return relativedelta(
+                months=self._months, years=self._years, timedelta=self._timedelta
+            )
         else:
-            return relativedelta(months=self._months, years=self._years, timedelta=self._timedelta + other)
+            return relativedelta(
+                months=self._months,
+                years=self._years,
+                timedelta=self._timedelta + other,
+            )
 
     @property
     def months(self):

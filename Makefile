@@ -1,24 +1,38 @@
 .venv:
 	python -m venv .venv
 
-.PHONY: requirements.txt
-requirements.txt: .venv
-	source .venv/bin/activate && \
+requirements.txt: .venv requirements.in
+	. .venv/bin/activate && \
 	pip-compile --output-file requirements.txt requirements.in
 
-.PHONY: requirements-dev.txt
-requirements-dev.txt: .venv
-	source .venv/bin/activate && \
-	pip-compile --output-file requirements-dev.txt requirements-dev.in
+requirements-dev.txt: .venv requirements.in requirements-dev.in
+	. .venv/bin/activate && \
+	pip-compile --output-file requirements-dev.txt requirements.in requirements-dev.in
 
+.PHONY: requirements
 requirements: requirements.txt requirements-dev.txt
 
 .PHONY: install
 install: .venv
-	source .venv/bin/activate && \
+	. .venv/bin/activate && \
 	pip install -r requirements.txt
 
 .PHONY: install_dev
 install_dev: install
-	source .venv/bin/activate && \
+	. .venv/bin/activate && \
 	pip install -r requirements-dev.txt
+
+.PHONY: test
+test: install_dev
+	. .venv/bin/activate && \
+	pytest ./afk_parser/tests -vv
+
+.PHONY: lint
+lint:
+	. .venv/bin/activate && \
+	pyright .
+
+.PHONY: format
+format:
+	. .venv/bin/activate && \
+	ruff format .
