@@ -9,13 +9,17 @@ class AFKParser:
     def __init__(self):
         logging.basicConfig(level=logging.INFO)
 
-    def parse_dates(self, phrase: str) -> tuple[datetime, datetime] | None:
+    def parse_dates(
+        self, phrase: str, source_time: datetime | None = None
+    ) -> tuple[datetime, datetime] | None:
         cal = parsedatetime.Calendar()
         has_two_parts = any(text in phrase for text in ("after", "from")) and any(
             text in phrase for text in ("to", "till", "for")
         )
 
-        time_struct, parse_status = cal.parse(datetimeString=phrase)
+        time_struct, parse_status = cal.parse(
+            datetimeString=phrase, sourceTime=source_time
+        )
         if parse_status == 0:
             logging.info(f"Could not parse datetime from phrase: {phrase}")
             return None
