@@ -48,7 +48,7 @@ class AFKParser:
             end_datetime = datetime.combine(datetime(*time_struct[:6]), time.max)
             start_datetime = datetime.combine(end_datetime, time.min)
         else:
-            start_datetime = users_local_now
+            start_datetime = datetime.now(tz=UTC)
             end_datetime = self.correct_end_of_day_datetimes(
                 phrase=phrase, dt=datetime(*time_struct[:6])
             )

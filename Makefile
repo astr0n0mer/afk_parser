@@ -36,3 +36,13 @@ lint:
 format:
 	. .venv/bin/activate && \
 	ruff format .
+
+.PHONY: update_tag_latest
+update_tag_latest:
+	git tag --delete latest && git push --delete origin latest
+	git tag latest && git push origin latest
+
+.PHONY: update_tag_stable
+update_tag_stable:
+	git tag --delete stable && git push --delete origin stable
+	git tag stable && git push origin stable
