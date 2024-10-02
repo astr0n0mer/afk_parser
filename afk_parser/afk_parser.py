@@ -1,6 +1,6 @@
 import logging
 import re
-from datetime import datetime, time
+from datetime import UTC, datetime, time, timedelta
 
 import parsedatetime
 
@@ -10,15 +10,16 @@ class AFKParser:
         logging.basicConfig(level=logging.INFO)
 
     def parse_dates(
-        self, phrase: str, source_time: datetime | None = None
+        self, phrase: str, tz_offset: float = 0
     ) -> tuple[datetime, datetime] | None:
+        users_local_now = datetime.now(tz=UTC) + timedelta(seconds=tz_offset)
         cal = parsedatetime.Calendar()
         has_two_parts = any(text in phrase for text in ("after", "from")) and any(
             text in phrase for text in ("to", "till", "for")
         )
 
         time_struct, parse_status = cal.parse(
-            datetimeString=phrase, sourceTime=source_time
+            datetimeString=phrase, sourceTime=users_local_now
         )
         if parse_status == 0:
             logging.info(f"Could not parse datetime from phrase: {phrase}")
@@ -33,8 +34,10 @@ class AFKParser:
             if parse_status in (1, 3):  # time_struct is a date or datetime
                 end_datetime = datetime(*time_struct[:6])
             elif parse_status == 2:  # time_struct is a time
-                delta = datetime(*time_struct[:6]) - datetime.now()
-                end_datetime = start_datetime + delta
+                delta = (
+                    datetime(*time_struct[:6]).timestamp() - users_local_now.timestamp()
+                )
+                end_datetime = start_datetime + timedelta(seconds=delta)
             else:
                 logging.info(f"Could not parse datetime from phrase: {end_phrase}")
                 return None
@@ -45,7 +48,7 @@ class AFKParser:
             end_datetime = datetime.combine(datetime(*time_struct[:6]), time.max)
             start_datetime = datetime.combine(end_datetime, time.min)
         else:
-            start_datetime = datetime.now()
+            start_datetime = users_local_now
             end_datetime = self.correct_end_of_day_datetimes(
                 phrase=phrase, dt=datetime(*time_struct[:6])
             )
