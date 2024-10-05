@@ -34,10 +34,10 @@ class AFKParser:
             if parse_status in (1, 3):  # time_struct is a date or datetime
                 end_datetime = datetime(*time_struct[:6])
             elif parse_status == 2:  # time_struct is a time
-                delta = (
-                    datetime(*time_struct[:6]).timestamp() - users_local_now.timestamp()
+                delta_seconds = (
+                    datetime(*time_struct[:6]).timestamp() - datetime.now().timestamp()
                 )
-                end_datetime = start_datetime + timedelta(seconds=delta)
+                end_datetime = start_datetime + timedelta(seconds=delta_seconds)
             else:
                 logging.info(f"Could not parse datetime from phrase: {end_phrase}")
                 return None
@@ -48,7 +48,7 @@ class AFKParser:
             end_datetime = datetime.combine(datetime(*time_struct[:6]), time.max)
             start_datetime = datetime.combine(end_datetime, time.min)
         else:
-            start_datetime = datetime.now(tz=UTC)
+            start_datetime = datetime.now(tz=UTC) + timedelta(seconds=tz_offset)
             end_datetime = self.correct_end_of_day_datetimes(
                 phrase=phrase, dt=datetime(*time_struct[:6])
             )
