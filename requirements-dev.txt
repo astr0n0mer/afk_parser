@@ -4,39 +4,5 @@
 #
 #    pip-compile --output-file=requirements-dev.txt requirements-dev.in requirements.in
 #
-build==1.2.2
-    # via pip-tools
-click==8.1.7
-    # via pip-tools
-iniconfig==2.0.0
-    # via pytest
-nodeenv==1.9.1
-    # via pyright
-packaging==24.1
-    # via
-    #   build
-    #   pytest
 parsedatetime==2.6
     # via -r requirements.in
-pip-tools==7.4.1
-    # via -r requirements-dev.in
-pluggy==1.5.0
-    # via pytest
-pyproject-hooks==1.2.0
-    # via
-    #   build
-    #   pip-tools
-pyright==1.1.382.post1
-    # via -r requirements-dev.in
-pytest==8.3.2
-    # via -r requirements-dev.in
-ruff==0.6.8
-    # via -r requirements-dev.in
-typing-extensions==4.12.2
-    # via pyright
-wheel==0.44.0
-    # via pip-tools
-
-# The following packages are considered to be unsafe in a requirements file:
-# pip
-# setuptools
