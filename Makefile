@@ -13,12 +13,12 @@ requirements-dev.txt: .venv requirements.txt requirements-dev.in
 requirements: requirements.txt requirements-dev.txt
 
 .PHONY: install
-install: .venv requirements.txt
+install: .venv
 	. .venv/bin/activate && \
 	pip install -r requirements.txt
 
 .PHONY: install_dev
-install_dev: install requirements-dev.txt
+install_dev: install
 	. .venv/bin/activate && \
 	pip install -r requirements-dev.txt
 
