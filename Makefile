@@ -5,7 +5,7 @@ requirements.txt: .venv requirements.in
 	. .venv/bin/activate && \
 	pip-compile --output-file requirements.txt requirements.in
 
-requirements-dev.txt: .venv requirements.in requirements-dev.in
+requirements-dev.txt: .venv requirements.txt requirements-dev.in
 	. .venv/bin/activate && \
 	pip-compile --output-file requirements-dev.txt requirements-dev.in
 
@@ -13,12 +13,12 @@ requirements-dev.txt: .venv requirements.in requirements-dev.in
 requirements: requirements.txt requirements-dev.txt
 
 .PHONY: install
-install: .venv
+install: .venv requirements.txt
 	. .venv/bin/activate && \
 	pip install -r requirements.txt
 
 .PHONY: install_dev
-install_dev: install
+install_dev: install requirements-dev.txt
 	. .venv/bin/activate && \
 	pip install -r requirements-dev.txt
 
