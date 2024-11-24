@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-setup(
+_ = setup(
     name="afk_parser",
     version="0.1.0",
     packages=find_packages(),
@@ -8,6 +8,6 @@ setup(
         "parsedatetime",
     ],
     description="A parser for AFK durations",
-    author="Imran Khan",
+    author="astr0n0mer",
     url="https://github.com/astr0n0mer/afk_parser",
 )

@@ -5,7 +5,7 @@ requirements.txt: .venv requirements.in
 	. .venv/bin/activate && \
 	pip-compile --output-file requirements.txt requirements.in
 
-requirements-dev.txt: .venv requirements.in requirements-dev.in
+requirements-dev.txt: .venv requirements.txt requirements-dev.in
 	. .venv/bin/activate && \
 	pip-compile --output-file requirements-dev.txt requirements-dev.in
 

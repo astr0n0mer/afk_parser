@@ -2,4 +2,5 @@
 pip-tools
 pyright
 pytest
+python-dateutil
 ruff
