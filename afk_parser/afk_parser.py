@@ -66,4 +66,19 @@ class AFKParser:
             start_datetime = parsed_datetimes[0][0].replace(tzinfo=custom_timezone)
             end_datetime = parsed_datetimes[1][0].replace(tzinfo=custom_timezone)
 
+            if any(
+                parsed_datetimes[1][1].accuracy <= accuracy
+                for accuracy in [
+                    pdtContext.ACU_HALFDAY,
+                    pdtContext.ACU_HOUR,
+                    pdtContext.ACU_MIN,
+                    pdtContext.ACU_SEC,
+                    pdtContext.ACU_NOW,
+                ]
+            ):
+                delta = parsed_datetimes[1][0]
+                end_datetime = start_datetime + timedelta(
+                    hours=delta.hour, minutes=delta.minute, seconds=delta.second
+                )
+
         return (start_datetime, end_datetime)
