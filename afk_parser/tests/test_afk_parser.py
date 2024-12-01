@@ -104,21 +104,21 @@ def afk_parser() -> AFKParser:
         (
             "afk tomorrow",
             (
-                datetime.now(),
+                datetime.combine(datetime.now() + timedelta(days=1), time.min),
                 datetime.combine(datetime.now() + timedelta(days=1), time.max),
             ),
         ),
         (
             "afk for 2 days",
             (
-                datetime.now(),
+                datetime.combine(datetime.now() + timedelta(days=2), time.min),
                 datetime.combine(datetime.now() + timedelta(days=2), time.max),
             ),
         ),
         (
             "afk for 10 days",
             (
-                datetime.now(),
+                datetime.combine(datetime.now() + timedelta(days=10), time.min),
                 datetime.combine(datetime.now() + timedelta(days=10), time.max),
             ),
         ),
@@ -364,5 +364,5 @@ def test_extract_datetime__with_local_tz(
     expected_start_datetime, expected_end_datetime = (
         dt.replace(tzinfo=custom_timezone) for dt in expected_datetimes
     )
-    assert expected_start_datetime - start_datetime <= datetime_comparison_flex
-    assert expected_end_datetime - end_datetime <= datetime_comparison_flex
+    assert abs(expected_start_datetime - start_datetime) <= datetime_comparison_flex
+    assert abs(expected_end_datetime - end_datetime) <= datetime_comparison_flex

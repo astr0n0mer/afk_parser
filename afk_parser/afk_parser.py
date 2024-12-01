@@ -76,9 +76,9 @@ class AFKParser:
                     pdtContext.ACU_NOW,
                 ]
             ):
-                delta = parsed_datetimes[1][0]
-                end_datetime = start_datetime + timedelta(
-                    hours=delta.hour, minutes=delta.minute, seconds=delta.second
-                )
+                delta = parsed_datetimes[1][0].replace(
+                    tzinfo=custom_timezone
+                ) - datetime.now(tz=custom_timezone)
+                end_datetime = start_datetime + delta
 
         return (start_datetime, end_datetime)
