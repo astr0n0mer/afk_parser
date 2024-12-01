@@ -4,3 +4,4 @@ pyright
 pytest
 python-dateutil
 ruff
+uv
