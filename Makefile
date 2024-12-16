@@ -51,3 +51,13 @@ update_tag_latest:
 update_tag_stable:
 	git tag --delete stable && git push --delete origin stable
 	git tag stable && git push origin stable
+
+.PHONY: group_dependabot_prs
+group_dependabot_prs:
+	git fetch --all & \
+	git switch --create grouped_dependency_upgrade && \
+	git branch --all | grep dependabot | xargs -I {} git merge {} && \
+	gh pr create \
+		--title "build(deps): grouped dependabot upgrades" \
+		--fill-verbose \
+		--assignee "@me"
