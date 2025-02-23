@@ -38,7 +38,7 @@ six==1.16.0
     # via python-dateutil
 typing-extensions==4.12.2
     # via pyright
-uv==0.6.0
+uv==0.6.2
     # via -r requirements-dev.in
 wheel==0.45.1
     # via pip-tools
