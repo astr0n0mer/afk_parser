@@ -26,19 +26,19 @@ pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
-pyright==1.1.398
+pyright==1.1.399
     # via -r requirements-dev.in
 pytest==8.3.5
     # via -r requirements-dev.in
 python-dateutil==2.9.0.post0
     # via -r requirements-dev.in
-ruff==0.11.4
+ruff==0.11.5
     # via -r requirements-dev.in
 six==1.16.0
     # via python-dateutil
 typing-extensions==4.12.2
     # via pyright
-uv==0.6.12
+uv==0.6.14
     # via -r requirements-dev.in
 wheel==0.45.1
     # via pip-tools
