@@ -17,7 +17,7 @@ packaging==25.0
     #   build
     #   pytest
 parsedatetime==2.6
-    # via -r /Users/tux/root/projects/afk_parser/requirements.in
+    # via -r requirements.in
 pip-tools==7.5.0
     # via -r requirements-dev.in
 pluggy==1.6.0
@@ -40,7 +40,7 @@ six==1.17.0
     # via python-dateutil
 typing-extensions==4.14.1
     # via pyright
-uv==0.8.6
+uv==0.8.8
     # via -r requirements-dev.in
 wheel==0.45.1
     # via pip-tools
