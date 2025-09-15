@@ -34,13 +34,13 @@ pytest==8.4.2
     # via -r requirements-dev.in
 python-dateutil==2.9.0.post0
     # via -r requirements-dev.in
-ruff==0.12.12
+ruff==0.13.0
     # via -r requirements-dev.in
 six==1.17.0
     # via python-dateutil
 typing-extensions==4.15.0
     # via pyright
-uv==0.8.15
+uv==0.8.17
     # via -r requirements-dev.in
 wheel==0.45.1
     # via pip-tools
