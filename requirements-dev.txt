@@ -18,7 +18,7 @@ packaging==25.0
     #   pytest
 parsedatetime==2.6
     # via -r requirements.in
-pip-tools==7.5.0
+pip-tools==7.5.1
     # via -r requirements-dev.in
 pluggy==1.6.0
     # via pytest
@@ -28,19 +28,19 @@ pyproject-hooks==1.2.0
     # via
     #   build
     #   pip-tools
-pyright==1.1.405
+pyright==1.1.406
     # via -r requirements-dev.in
 pytest==8.4.2
     # via -r requirements-dev.in
 python-dateutil==2.9.0.post0
     # via -r requirements-dev.in
-ruff==0.13.2
+ruff==0.13.3
     # via -r requirements-dev.in
 six==1.17.0
     # via python-dateutil
 typing-extensions==4.15.0
     # via pyright
-uv==0.8.22
+uv==0.8.23
     # via -r requirements-dev.in
 wheel==0.45.1
     # via pip-tools
