@@ -40,7 +40,7 @@ six==1.17.0
     # via python-dateutil
 typing-extensions==4.15.0
     # via pyright
-uv==0.9.4
+uv==0.9.5
     # via -r requirements-dev.in
 wheel==0.45.1
     # via pip-tools
