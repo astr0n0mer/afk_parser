@@ -1,0 +1,17 @@
+[project]
+name = "afk-parser"
+version = "0.1.0"
+description = "Parse natural-language AFK (away-from-keyboard) phrases into concrete, timezone-aware start and end datetimes."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "parsedatetime>=2.6",
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.407",
+    "pytest>=9.0.1",
+    "python-dateutil>=2.9.0.post0",
+    "ruff>=0.14.5",
+]

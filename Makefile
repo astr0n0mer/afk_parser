@@ -1,32 +1,20 @@
 .venv:
-	python -m venv .venv
-
-requirements.txt: .venv requirements.in
-	. .venv/bin/activate && \
-	pip-compile --output-file requirements.txt requirements.in
-
-requirements-dev.txt: .venv requirements.txt requirements-dev.in
-	. .venv/bin/activate && \
-	pip-compile --output-file requirements-dev.txt requirements-dev.in
-
-.PHONY: requirements
-requirements: requirements.txt requirements-dev.txt
+	uv venv --clear
 
 .PHONY: install
 install: .venv
 	. .venv/bin/activate && \
-	(uv pip install -r requirements.txt || pip install -r requirements.txt)
+	uv sync --no-dev
 
 .PHONY: install_dev
 install_dev: install
 	. .venv/bin/activate && \
-	(uv pip install -r requirements-dev.txt || pip install -r requirements-dev.txt)
+	uv sync
 
 .PHONY: upgrade_dependencies
 upgrade_dependencies: .venv install_dev
 	. .venv/bin/activate && \
-	pip-compile --upgrade requirements.in && \
-	pip-compile --upgrade requirements-dev.in
+	uv sync --upgrade
 
 .PHONY: test
 test: install_dev
