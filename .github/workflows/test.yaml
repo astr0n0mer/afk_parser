@@ -13,11 +13,11 @@ jobs:
       image: python:3.14-slim
 
     steps:
-      - name: Install the latest version of uv
-        uses: astral-sh/setup-uv@v7
-
       - name: Checkout repository
         uses: actions/checkout@v5
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v7
 
       - name: Install dependencies and run pytest
         run: |
