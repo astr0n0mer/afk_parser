@@ -1,3 +1,5 @@
+"""Parse AFK phrases into timezone-aware datetime windows."""
+
 from datetime import datetime, time, timedelta, timezone
 import logging
 
@@ -5,12 +7,29 @@ from parsedatetime import Calendar, VERSION_CONTEXT_STYLE, pdtContext
 
 
 class AFKParser:
+    """Convert natural-language AFK status phrases into start/end datetimes."""
+
     def __init__(self, logging_level: int = logging.INFO):
+        """Configure parser logging.
+
+        Args:
+            logging_level: Standard library logging level used for parse failures.
+        """
         logging.basicConfig(level=logging_level)
 
     def parse_dates(
         self, phrase: str, tz_offset: float = 0
     ) -> tuple[datetime, datetime] | None:
+        """Parse an AFK phrase into a timezone-aware `(start, end)` pair.
+
+        Args:
+            phrase: Natural-language AFK phrase, such as "afk for 30 min".
+            tz_offset: Offset from UTC in seconds for the returned datetimes.
+
+        Returns:
+            A `(start_datetime, end_datetime)` tuple, or `None` when no date/time
+            expression can be parsed from the phrase.
+        """
         custom_timezone = timezone(timedelta(seconds=tz_offset))
         start_datetime = end_datetime = datetime.now(tz=custom_timezone)
         cal = Calendar(version=VERSION_CONTEXT_STYLE)

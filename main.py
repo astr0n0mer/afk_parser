@@ -5,6 +5,7 @@ from afk_parser.afk_parser import AFKParser
 
 
 def main():
+    """Run the source CLI for parsing a single AFK phrase."""
     if len(sys.argv) != 2:
         print(f'Usage: python {__file__}.py "afk from 5pm"')
 

@@ -12,6 +12,22 @@ The core `AFKParser` uses [parsedatetime](https://pypi.org/project/parsedatetime
 - "afk on monday"
 
 
+## Table of contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Quick start](#quick-start)
+- [Supported phrase patterns](#supported-phrase-patterns-examples)
+- [Development](#development)
+- [Testing](#testing)
+- [Project structure](#project-structure)
+- [API reference](#api-reference)
+- [Requirements](#requirements)
+- [Limitations and notes](#limitations-and-notes)
+- [Contributing](#contributing)
+- [License](#license)
+
+
 ### Features
 
 - **Natural language parsing** powered by [parsedatetime](https://pypi.org/project/parsedatetime/)
@@ -22,25 +38,26 @@ The core `AFKParser` uses [parsedatetime](https://pypi.org/project/parsedatetime
 
 ## Installation
 
-### From source (recommended until first PyPI release)
+### From source
 
 ```bash
 git clone https://github.com/astr0n0mer/afk_parser.git
 cd afk_parser
-python -m venv .venv && . .venv/bin/activate
-pip install -r requirements.txt
+uv sync
 ```
 
-For development (linters, tests, tooling):
+This creates a local `.venv` and installs the package with its locked dependencies.
+
+For runtime dependencies only:
 
 ```bash
-make install_dev
+uv sync --no-dev
 ```
 
 ### From PyPI (once published)
 
 ```bash
-pip install afk_parser
+uv add afk-parser
 ```
 
 
@@ -74,7 +91,7 @@ Notes:
 Run the helper script with your phrase. It automatically infers your local UTC offset.
 
 ```bash
-python main.py "afk from 5pm"
+uv run python main.py "afk from 5pm"
 ```
 
 Example output (two lines; ISO-8601 repr may vary):
@@ -100,24 +117,30 @@ These examples are covered by tests and illustrate the behavior. Actual values d
 
 ## Development
 
-This repository includes a `Makefile` to simplify common tasks. Use a virtual environment.
+Use `uv` to scaffold the environment and install dependencies from `pyproject.toml` and `uv.lock`.
 
 ```bash
-python -m venv .venv
-. .venv/bin/activate
+# Install runtime + dev dependencies
+uv sync
 
-# Install runtime deps
-make install
-
-# Install dev deps (pytest, ruff, pyright, etc.)
-make install_dev
+# Install runtime dependencies only
+uv sync --no-dev
 ```
 
 Useful commands:
 
-- `make requirements` — regenerate `requirements.txt` and `requirements-dev.txt` from `requirements.in` files
-- `make install` — install runtime dependencies
-- `make install_dev` — install runtime + dev dependencies
+- `uv sync` — create/update `.venv` with runtime and dev dependencies
+- `uv sync --no-dev` — install runtime dependencies only
+- `uv sync --upgrade` — upgrade locked dependencies
+- `uv run python main.py "afk from 5pm"` — run the source CLI
+- `uv run pytest ./afk_parser/tests -vv` — run the test suite
+- `uv run pyright .` — run type checks
+- `uv run ruff format .` — format the codebase
+
+The `Makefile` wraps the same common tasks if you prefer `make`:
+
+- `make install` — run `uv sync --no-dev`
+- `make install_dev` — run `uv sync`
 - `make test` — run the test suite
 - `make lint` — run type checks with Pyright
 - `make format` — format with Ruff
@@ -128,14 +151,13 @@ Useful commands:
 Run the full test suite:
 
 ```bash
-make test
+uv run pytest ./afk_parser/tests -vv
 ```
 
-Or directly via pytest:
+Or via the Makefile:
 
 ```bash
-. .venv/bin/activate
-python -m pytest ./afk_parser/tests -vv
+make test
 ```
 
 
@@ -150,7 +172,8 @@ afk_parser/
       test_afk_parser.py
   main.py              # Simple CLI wrapper (from source)
   Makefile             # Dev tasks (install, test, lint, format)
-  requirements*.txt
+  pyproject.toml       # Project metadata and dependencies
+  uv.lock              # Locked dependency versions
   setup.py
 ```
 
@@ -169,8 +192,9 @@ class AFKParser:
 
 ## Requirements
 
-- Python 3.10+
-- `parsedatetime` (installed via requirements)
+- Python 3.14+
+- `uv`
+- `parsedatetime` (installed by `uv sync`)
 
 
 ## Limitations and notes
@@ -185,14 +209,12 @@ class AFKParser:
 Issues and PRs are welcome. Before opening a PR, please:
 
 ```bash
-make format
-make lint
-make test
+uv run ruff format .
+uv run pyright .
+uv run pytest ./afk_parser/tests -vv
 ```
 
 
 ## License
 
 MIT © Imran Khan. See [LICENSE](./LICENSE) for details.
-
-
