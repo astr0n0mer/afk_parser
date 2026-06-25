@@ -1,35 +1,26 @@
-.venv:
-	uv venv --clear
-
 .PHONY: install
-install: .venv
-	. .venv/bin/activate && \
-	uv sync --no-dev
+install:
+	uv sync --locked --no-dev
 
 .PHONY: install_dev
-install_dev: install
-	. .venv/bin/activate && \
-	uv sync
+install_dev:
+	uv sync --locked
 
 .PHONY: upgrade_dependencies
-upgrade_dependencies: .venv install_dev
-	. .venv/bin/activate && \
+upgrade_dependencies:
 	uv sync --upgrade
 
 .PHONY: test
-test: install_dev
-	. .venv/bin/activate && \
-	python -m pytest ./afk_parser/tests -vv
+test:
+	uv run --locked pytest ./afk_parser/tests -vv
 
 .PHONY: lint
 lint:
-	. .venv/bin/activate && \
-	pyright .
+	uv run --locked pyright .
 
 .PHONY: format
 format:
-	. .venv/bin/activate && \
-	ruff format .
+	uv run --locked ruff format .
 
 .PHONY: update_tag_latest
 update_tag_latest:

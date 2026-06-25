@@ -43,7 +43,7 @@ The core `AFKParser` uses [parsedatetime](https://pypi.org/project/parsedatetime
 ```bash
 git clone https://github.com/astr0n0mer/afk_parser.git
 cd afk_parser
-uv sync
+uv sync --locked
 ```
 
 This creates a local `.venv` and installs the package with its locked dependencies.
@@ -51,7 +51,7 @@ This creates a local `.venv` and installs the package with its locked dependenci
 For runtime dependencies only:
 
 ```bash
-uv sync --no-dev
+uv sync --locked --no-dev
 ```
 
 ### From PyPI (once published)
@@ -91,7 +91,7 @@ Notes:
 Run the helper script with your phrase. It automatically infers your local UTC offset.
 
 ```bash
-uv run python main.py "afk from 5pm"
+uv run --locked python main.py "afk from 5pm"
 ```
 
 Example output (two lines; ISO-8601 repr may vary):
@@ -121,26 +121,26 @@ Use `uv` to scaffold the environment and install dependencies from `pyproject.to
 
 ```bash
 # Install runtime + dev dependencies
-uv sync
+uv sync --locked
 
 # Install runtime dependencies only
-uv sync --no-dev
+uv sync --locked --no-dev
 ```
 
 Useful commands:
 
-- `uv sync` — create/update `.venv` with runtime and dev dependencies
-- `uv sync --no-dev` — install runtime dependencies only
-- `uv sync --upgrade` — upgrade locked dependencies
-- `uv run python main.py "afk from 5pm"` — run the source CLI
-- `uv run pytest ./afk_parser/tests -vv` — run the test suite
-- `uv run pyright .` — run type checks
-- `uv run ruff format .` — format the codebase
+- `uv sync --locked` — create/update `.venv` with locked runtime and dev dependencies
+- `uv sync --locked --no-dev` — install locked runtime dependencies only
+- `uv run --locked python main.py "afk from 5pm"` — run the source CLI
+- `uv run --locked pytest ./afk_parser/tests -vv` — run the test suite
+- `uv run --locked pyright .` — run type checks
+- `uv run --locked ruff format .` — format the codebase
 
 The `Makefile` wraps the same common tasks if you prefer `make`:
 
-- `make install` — run `uv sync --no-dev`
-- `make install_dev` — run `uv sync`
+- `make install` — run `uv sync --locked --no-dev`
+- `make install_dev` — run `uv sync --locked`
+- `make upgrade_dependencies` — upgrade locked dependencies
 - `make test` — run the test suite
 - `make lint` — run type checks with Pyright
 - `make format` — format with Ruff
@@ -151,7 +151,7 @@ The `Makefile` wraps the same common tasks if you prefer `make`:
 Run the full test suite:
 
 ```bash
-uv run pytest ./afk_parser/tests -vv
+uv run --locked pytest ./afk_parser/tests -vv
 ```
 
 Or via the Makefile:
@@ -194,7 +194,7 @@ class AFKParser:
 
 - Python 3.14+
 - `uv`
-- `parsedatetime` (installed by `uv sync`)
+- `parsedatetime` (installed by `uv sync --locked`)
 
 
 ## Limitations and notes
@@ -209,9 +209,9 @@ class AFKParser:
 Issues and PRs are welcome. Before opening a PR, please:
 
 ```bash
-uv run ruff format .
-uv run pyright .
-uv run pytest ./afk_parser/tests -vv
+uv run --locked ruff format .
+uv run --locked pyright .
+uv run --locked pytest ./afk_parser/tests -vv
 ```
 
 
